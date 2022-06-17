@@ -19,29 +19,33 @@ export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
   @Get()
-  findAll(@Query() paginationQuery) {
-    return this.coffeesService.findAll();
+  async findAll(@Query() paginationQuery) {
+    console.log(await this.coffeesService.findAll());
+    return await this.coffeesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    console.log(typeof id);
-    return this.coffeesService.findOne('' + id);
+  async findOne(@Param('id') id: string) {
+    console.log(await this.coffeesService.findOne(id));
+    return await this.coffeesService.findOne(id);
   }
 
   @Post()
-  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+  async create(@Body() createCoffeeDto: CreateCoffeeDto) {
     console.log(createCoffeeDto instanceof CreateCoffeeDto);
-    return this.coffeesService.create(createCoffeeDto);
+    return await this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
-    return this.coffeesService.update(id, updateCoffeeDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateCoffeeDto: UpdateCoffeeDto,
+  ) {
+    return await this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.coffeesService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.coffeesService.remove(id);
   }
 }
